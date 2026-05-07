@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="header">
+    <div class="logo-group">
+      <img src="cleantelegram.webp" alt="Logo" class="logo">
+      <h1>Clean Telegram</h1>
+    </div>
+    <label class="switch">
+      <input type="checkbox" id="main-toggle">
+      <span class="slider"></span>
+    </label>
+  </div>
+
+  <div id="sub-settings">
+    <div class="section-title">Filters</div>
+    <div class="card">
+      <div class="row">
+        <span>Remove Promos</span>
+        <div class="row-actions">
+          <button id="promo-settings-btn" class="icon-btn" title="Edit Promo Strings">⚙️</button>
+          <label class="switch">
+            <input type="checkbox" id="clean-promos">
+            <span class="slider"></span>
+          </label>
+        </div>
+      </div>
+      <div id="promo-settings" class="settings-panel hidden">
+        <div class="panel-hint-group">
+          <span class="panel-hint">Enter one phrase per line:</span>
+          <div class="tooltip">ℹ️
+            <span class="tooltiptext tooltip-bottom">
+              <b>Examples:</b><br>
+              • "Click here to share"<br>
+              • "Sponsored by"<br>
+              • "Join our channel"<br>
+              • "תגובות" (Comments)
+            </span>
+          </div>
+        </div>
+        <textarea id="promo-list" rows="5" placeholder="e.g. WhatsApp"></textarea>
+      </div>
+      <div class="row">
+        <span>Hide Emojis & Stickers</span>
+        <label class="switch">
+          <input type="checkbox" id="clean-emojis">
+          <span class="slider"></span>
+        </label>
+      </div>
+      <div class="row">
+        <span>Hide Reactions</span>
+        <label class="switch">
+          <input type="checkbox" id="clean-reactions">
+          <span class="slider"></span>
+        </label>
+      </div>
+      <div class="row">
+        <span>Hide Comments</span>
+        <label class="switch">
+          <input type="checkbox" id="clean-comments">
+          <span class="slider"></span>
+        </label>
+      </div>
+      <div class="row">
+        <span>Clean Input Bar</span>
+        <label class="switch">
+          <input type="checkbox" id="clean-input">
+          <span class="slider"></span>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

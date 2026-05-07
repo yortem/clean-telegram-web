@@ -1,0 +1,35 @@
+/* Telegram Specific Cleaning Styles */
+
+/* Emojis & Stickers */
+body.clean-emojis .emoji, 
+body.clean-emojis .emoji-image, 
+body.clean-emojis .sticker-wrapper {
+  display: none !important;
+}
+
+/* Reactions */
+body.clean-reactions reactions-element, 
+body.clean-reactions .Reactions, 
+body.clean-reactions .reactions-container, 
+body.clean-reactions .reactions {
+  display: none !important;
+}
+
+/* Comments & Replies */
+body.clean-comments .CommentButton, 
+body.clean-comments .comment-button, 
+body.clean-comments .DiscussButton, 
+body.clean-comments .ReplyMarkup,
+body.clean-comments replies-element,
+body.clean-comments .replies-footer,
+body.clean-comments .replies {
+  display: none !important;
+}
+
+/* Input Bar */
+body.clean-input .ChatInput-emoji, 
+body.clean-input .emoji-button, 
+body.clean-input .sticker-button,
+body.clean-input .attach-file {
+  display: none !important;
+}

@@ -1,0 +1,72 @@
+name: Release Extension
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'src/**'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Increment version
+        id: version_bump
+        run: |
+          # Read current version from src/manifest.json
+          VERSION=$(node -p "require('./src/manifest.json').version")
+          echo "Current version: $VERSION"
+          
+          # Split version into parts
+          IFS='.' read -ra ADDR <<< "$VERSION"
+          if [ ${#ADDR[@]} -eq 2 ]; then
+            # If version is 1.2, make it 1.2.1
+            NEW_VERSION="${VERSION}.1"
+          elif [ ${#ADDR[@]} -eq 1 ]; then
+            # If version is 1, make it 1.0.1
+            NEW_VERSION="${VERSION}.0.1"
+          else
+            # Increment last part (e.g., 1.2.1 -> 1.2.2)
+            LAST_INDEX=$((${#ADDR[@]} - 1))
+            ADDR[$LAST_INDEX]=$((ADDR[$LAST_INDEX] + 1))
+            NEW_VERSION=$(IFS='.'; echo "${ADDR[*]}")
+          fi
+          
+          echo "New version: $NEW_VERSION"
+          
+          # Update src/manifest.json
+          node -e "const fs = require('fs'); const manifest = JSON.parse(fs.readFileSync('./src/manifest.json', 'utf8')); manifest.version = '$NEW_VERSION'; fs.writeFileSync('./src/manifest.json', JSON.stringify(manifest, null, 2));"
+          
+          echo "version=$NEW_VERSION" >> $GITHUB_OUTPUT
+
+      - name: Commit version bump
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add src/manifest.json
+          git commit -m "chore: bump version to ${{ steps.version_bump.outputs.version }} [skip ci]"
+          git push
+
+      - name: Create ZIP file
+        run: |
+          cd src
+          zip -r ../clean-telegram-extension.zip .
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: clean-telegram-extension.zip
+          tag_name: v${{ steps.version_bump.outputs.version }}
+          name: Release v${{ steps.version_bump.outputs.version }}
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
