@@ -1,9 +1,12 @@
 {
   "manifest_version": 3,
   "name": "Clean Telegram Web",
-  "version": "1.2",
+  "version": "1.2.1",
   "description": "Removes unwanted text, emojis, reactions, and comments from Telegram Web.",
-  "permissions": ["storage", "tabs"],
+  "permissions": [
+    "storage",
+    "tabs"
+  ],
   "icons": {
     "16": "icons/cleantelegram.png",
     "32": "icons/cleantelegram.png",
@@ -24,9 +27,15 @@
   },
   "content_scripts": [
     {
-      "matches": ["https://web.telegram.org/*"],
-      "js": ["content.js"],
-      "css": ["style.css"],
+      "matches": [
+        "https://web.telegram.org/*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "css": [
+        "style.css"
+      ],
       "run_at": "document_idle"
     }
   ]
